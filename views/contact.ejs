@@ -1,0 +1,51 @@
+<main>
+  <section id="contact-form">
+    <h2>Get in Touch!</h2>
+    <%# Displays the error message on top of form %> <% if (locals.error) { %>
+    <div class="error-message"><%= error %></div>
+    <% } %> 
+    
+      <%# Using formdata object for form to be pre-filled if someone edits a record %>
+
+    <form action="/contact" method="POST">
+      <% if (locals.isEditing) { %>
+      <input type="hidden" name="id" value="<%= formData.id %>" />
+      <% } %>
+      <label for="name">Name:</label><br />
+      <input
+        type="text"
+        id="fullname"
+        name="fullname"
+        minlength="2"
+        value="<%= locals.formData ? formData.fullname : '' %>"
+      /><br />
+
+      <label for="email">Email:</label><br />
+      <input
+        type="email"
+        id="email"
+        name="email"
+        pattern="^[^@]+@[^@]+\.[^@]+$"
+        value="<%= locals.formData ? formData.email : '' %>"
+      /><br />
+
+      <label for="number">Phone Number:</label><br />
+      <input
+        type="tel"
+        id="phone"
+        name="phone"
+        pattern="[1-9]{1}[0-9]{9}"
+        value="<%= locals.formData ? formData.phone : '' %>"
+        placeholder="Enter 10-digit phone number"
+      /><br />
+
+      <label for="message">Message:</label><br />
+      <textarea id="message" name="message" minlength="5">
+<%= locals.formData ? formData.message : '' %></textarea
+      ><br />
+      <button type="submit" class="btn btn-secondary">
+        <%= locals.isEditing ? 'Update Existing details' : 'Send Message' %>
+      </button>
+    </form>
+  </section>
+</main>
